@@ -46,13 +46,16 @@ def validate_request_data(rules, request_data):
 
         # Original validate.py only rejects undeclared keys for form and query_string.
         if section in ("form", "query_string"):
-            for key, value in section_data.items():
-                if key not in section_rules:
-                    add_error(result, key, "Unexpected data received")
-                    continue
+                for key, value in section_data.items():
+                    # Ignore internal CSRF token field injected by flask-validate when enabled
+                    if key == 'flask_validate_csrf_token':
+                        continue
+                    if key not in section_rules:
+                        add_error(result, key, "Unexpected data received")
+                        continue
 
-                rule = section_rules[key]["rules"]
-                check_rule(key, value, rule, result)
+                    rule = section_rules[key]["rules"]
+                    check_rule(key, value, rule, result)
         else:
             for key in section_rules:
                 if key not in section_data:
