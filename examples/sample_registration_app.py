@@ -25,6 +25,9 @@ if _src not in sys.path:
 import flask_validate as fv
 
 app = Flask(__name__)
+# Sessions are required for CSRF token storage. Set a secret key for example/demo use.
+# In production, set a secure, random secret and keep it secret.
+app.secret_key = 'dev-secret-change-me'
 
 # Example of using security monitoring
 @app.route('/security-status', methods=['GET'])
@@ -136,6 +139,9 @@ HOME_TEMPLATE = """
             {% endif %}
         </div>
 
+        {% if errors.get('flask_validate_csrf_token') %}
+            <div class="form-group"><div class="error">{{ errors['flask_validate_csrf_token']|join(', ') }}</div></div>
+        {% endif %}
         <button type="submit">Register</button>
     </form>
 </body>
