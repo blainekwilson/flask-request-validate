@@ -1,6 +1,6 @@
 # 🚀 flask-validate
 
-**Lightweight, decorator-based input validation for Flask apps — without the overhead of forms or full schema frameworks.**
+**Lightweight, decorator-based input validation for Flask apps**
 
 ---
 
@@ -16,14 +16,15 @@ Would especially appreciate input on API design and validation patterns.
 
 ## 🎯 Why this exists
 
-If you are building Flask apps, there are existing frameworks you should look at first.
+If you are building Flask apps, there are established frameworks you should consider first.
 
-- 🧱 Server-side rendering HTML apps → use Flask-WTF  
-- 🔌 REST API apps → use Marshmallow or Pydantic  
+* 🧱 Server-side rendered HTML apps → use Flask-WTF
+* 🔌 REST APIs → use Marshmallow or Pydantic
 
-> 👉 There are Flask apps with lightweight UIs not using any framework that still need safe, structured input validation
 
-**flask-validate is built specifically for that you.**
+👉 In practice, a large number of Flask applications still don’t use a structured validation framework and rely on ad hoc validation instead.
+
+👉 flask-validate exists to provide a lightweight, auditable alternative for those cases.
 
 ---
 
