@@ -1,6 +1,6 @@
 # API Reference
 
-This is a brief reference for the top-level API exported by `flask_validate`.
+This is a brief reference for the top-level API exported by `flask_request_validate`.
 
 - `fv.validate(rules, on_error=None)` — decorator to validate incoming request data. `on_error` is an optional callable that receives the full validation `result` dict and must return a Flask response.
 - `fv.exclude_validation(reason)` — mark an endpoint as excluded from validation.

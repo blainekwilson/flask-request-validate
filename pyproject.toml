@@ -22,9 +22,11 @@ classifiers = [
 dependencies = ["flask>=1.0"]
 requires-python = ">=3.8"
 readme = "README.md"
-homepage = "https://github.com/yourusername/flask-request-validate"
-repository = "https://github.com/yourusername/flask-request-validate"
-documentation = "https://github.com/yourusername/flask-request-validate"
+[project.urls]
+Homepage = "https://github.com/blainekwilson/flask-request-validate"
+Repository = "https://github.com/blainekwilson/flask-request-validate"
+Documentation = "https://github.com/blainekwilson/flask-request-validate#readme"
+Issues = "https://github.com/blainekwilson/flask-request-validate/issues"
 
 [project.optional-dependencies]
 dev = [
@@ -95,10 +97,10 @@ warn_no_return = true
 profile = "black"
 line_length = 100
 skip = [".gitignore", ".venv"]
-known_first_party = ["flask_validate"]
+known_first_party = ["flask_request_validate"]
 
 [tool.coverage.run]
-source = ["src/flask_validate"]
+source = ["src/flask_request_validate"]
 omit = ["*/tests/*"]
 
 [tool.coverage.report]
@@ -110,3 +112,6 @@ exclude_lines = [
     "if __name__ == .__main__.:",
     "if TYPE_CHECKING:",
 ]
+
+[project.scripts]
+flask-request-validate-audit = "flask_request_validate.audit_security:main"

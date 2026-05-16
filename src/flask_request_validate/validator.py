@@ -48,7 +48,7 @@ def validate_request_data(rules, request_data):
         if section in ("form", "query_string"):
                 for key, value in section_data.items():
                     # Ignore internal CSRF token field injected by flask-request-validate when enabled
-                    if key == 'flask_validate_csrf_token':
+                    if key == 'flask_request_validate_csrf_token':
                         continue
                     if key not in section_rules:
                         add_error(result, key, "Unexpected data received")

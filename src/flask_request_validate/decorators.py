@@ -59,7 +59,7 @@ def exclude_validation(reason="Endpoint does not require input validation"):
         # (before any requests) can detect the exclusion.
         wrapper.__validation_excluded__ = True
         wrapper.__validation_exclude_reason__ = reason
-        wrapper._flask_validate_excluded = True
+        wrapper._flask_request_validate_excluded = True
         # Keep reference to original for chained decorators
         wrapper.__original_func__ = func
 
@@ -113,7 +113,7 @@ def validate_request(rules, on_error=None, security_headers=None):
             try:
                 # If auto-CSRF is enabled, validate CSRF token for form submissions
                 try:
-                    auto_csrf = current_app.config.get('FLASK_VALIDATE_AUTO_CSRF', AUTO_CSRF_DEFAULT)
+                    auto_csrf = current_app.config.get('FLASK_REQUEST_VALIDATE_AUTO_CSRF', AUTO_CSRF_DEFAULT)
                     # Only enforce if auto-csrf enabled and app has a secret key configured
                     if auto_csrf and getattr(current_app, 'secret_key', None):
                         content_type = (request.content_type or '').lower()
@@ -121,18 +121,18 @@ def validate_request(rules, on_error=None, security_headers=None):
                             content_type.startswith('application/x-www-form-urlencoded')
                             or content_type.startswith('multipart/form-data')
                         ):
-                            submitted = request.form.get('flask_validate_csrf_token')
+                            submitted = request.form.get('flask_request_validate_csrf_token')
                             if not submitted or not _validate_csrf_token(submitted):
                                 # CSRF token missing or invalid — record as a validation error
                                 result = {"valid": False, "errors": {}}
-                                add_error(result, 'flask_validate_csrf_token', 'Invalid CSRF token')
+                                add_error(result, 'flask_request_validate_csrf_token', 'Invalid CSRF token')
                                 # ensure we skip the normal validator call below and flow
                                 # into the error handling path by setting result in locals()
                                 # (the code later checks for existing `result`)
                                 pass
                         # Remove CSRF field from the request data we pass to the validator
                         try:
-                            request_data['form'] = {k: v for k, v in request.form.items() if k != 'flask_validate_csrf_token'}
+                            request_data['form'] = {k: v for k, v in request.form.items() if k != 'flask_request_validate_csrf_token'}
                         except Exception:
                             pass
                 except Exception:
@@ -183,7 +183,7 @@ def validate_request(rules, on_error=None, security_headers=None):
         wrapper.__original_func__ = original_func
         wrapper.__validation_rules__ = rules
         # Mark wrapper as protected for external checks and backward compatibility
-        wrapper._flask_validate_protected = True
+        wrapper._flask_request_validate_protected = True
         # Keep static per-decorator security overrides accessible
         wrapper.__security_headers__ = security_headers
 
@@ -227,7 +227,7 @@ SECURITY_HEADER_DEFAULTS = {
 AUTO_CSRF_DEFAULT = True
 
 
-def _build_security_header_settings(app_config, app_key='FLASK_VALIDATE_SECURITY_HEADERS'):
+def _build_security_header_settings(app_config, app_key='FLASK_REQUEST_VALIDATE_SECURITY_HEADERS'):
     # copy the module-level defaults to avoid accidental mutation
     defaults = {k: v.copy() for k, v in SECURITY_HEADER_DEFAULTS.items()}
     try:
@@ -344,9 +344,9 @@ def init_app(app):
     # Prevent double-initialization
     if getattr(app, 'extensions', None) is None:
         app.extensions = {}
-    if app.extensions.get('flask_validate_security'):
+    if app.extensions.get('flask_request_validate_security'):
         return
-    app.extensions['flask_validate_security'] = True
+    app.extensions['flask_request_validate_security'] = True
 
     # Wrap the app.wsgi_app with middleware that strips the Server header
     class _ServerHeaderStripperMiddleware:
@@ -423,7 +423,7 @@ def init_app(app):
             # Inject CSRF tokens into HTML forms for GET/HTML responses.
             try:
                 # Only operate on HTML responses and if auto-CSRF is enabled and app has secret_key
-                auto_csrf = app.config.get('FLASK_VALIDATE_AUTO_CSRF', AUTO_CSRF_DEFAULT)
+                auto_csrf = app.config.get('FLASK_REQUEST_VALIDATE_AUTO_CSRF', AUTO_CSRF_DEFAULT)
                 if not (auto_csrf and getattr(app, 'secret_key', None)):
                     pass
                 else:
@@ -443,7 +443,7 @@ def init_app(app):
                             _store_csrf_token_in_session(token)
 
                             # Hidden input to inject
-                            hidden = f'<input type="hidden" name="flask_validate_csrf_token" value="{token}" />'
+                            hidden = f'<input type="hidden" name="flask_request_validate_csrf_token" value="{token}" />'
 
                             # Insert hidden input before each closing form tag
                             try:
@@ -548,16 +548,16 @@ def check_unprotected_routes(app=None, warn_unprotected=True, fail_on_unprotecte
                 is_excluded = False
 
                 if view_func is not None:
-                    if getattr(view_func, '_flask_validate_protected', False) or getattr(view_func, '__validation_protected__', False):
+                    if getattr(view_func, '_flask_request_validate_protected', False) or getattr(view_func, '__validation_protected__', False):
                         is_protected = True
-                    if getattr(view_func, '_flask_validate_excluded', False) or getattr(view_func, '__validation_excluded__', False):
+                    if getattr(view_func, '_flask_request_validate_excluded', False) or getattr(view_func, '__validation_excluded__', False):
                         is_excluded = True
 
                 if not (is_protected or is_excluded) and resolved is not None and resolved is not view_func:
                     # Check attributes on resolved/original function as well
-                    if getattr(resolved, '_flask_validate_protected', False) or getattr(resolved, '__validation_protected__', False):
+                    if getattr(resolved, '_flask_request_validate_protected', False) or getattr(resolved, '__validation_protected__', False):
                         is_protected = True
-                    if getattr(resolved, '_flask_validate_excluded', False) or getattr(resolved, '__validation_excluded__', False):
+                    if getattr(resolved, '_flask_request_validate_excluded', False) or getattr(resolved, '__validation_excluded__', False):
                         is_excluded = True
 
                 if is_protected:

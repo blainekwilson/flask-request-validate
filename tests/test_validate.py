@@ -1,5 +1,5 @@
 """
-Integration tests for ``flask_validate`` against the fixture app ``sample_app.py``.
+Integration tests for ``flask_request_validate`` against the fixture app ``sample_app.py``.
 
 Uses Flask's test client to assert status codes and HTML error bodies. Failure
 responses are HTTP 400 with ``<html><body>…</br>…`` payloads from the validator.

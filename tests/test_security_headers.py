@@ -11,7 +11,7 @@ def test_default_security_headers_present():
     """Ensure default security headers are present on example app responses."""
     app = s.app
     # disable HSTS for local HTTP example/testing
-    app.config['FLASK_VALIDATE_SECURITY_HEADERS'] = {
+    app.config['FLASK_REQUEST_VALIDATE_SECURITY_HEADERS'] = {
         'Strict-Transport-Security': {'enabled': False}
     }
 
@@ -19,11 +19,13 @@ def test_default_security_headers_present():
     r = client.get('/')
     assert r.status_code == 200
 
+    
+
     # Server header should be removed or empty
     assert r.headers.get('Server', '') == ''
 
     # Determine expected headers by merging defaults with app.config in-test
-    app_cfg = app.config.get('FLASK_VALIDATE_SECURITY_HEADERS', {}) or {}
+    app_cfg = app.config.get('FLASK_REQUEST_VALIDATE_SECURITY_HEADERS', {}) or {}
     for header, opts in fv.SECURITY_HEADER_DEFAULTS.items():
         # app_cfg may contain per-header dicts overriding enabled/value
         overridden = app_cfg.get(header)
@@ -61,7 +63,7 @@ def test_override_default_before_app_creation(monkeypatch):
             return 'ok'
 
         # disable HSTS for this local HTTP test app
-        app.config['FLASK_VALIDATE_SECURITY_HEADERS'] = {
+        app.config['FLASK_REQUEST_VALIDATE_SECURITY_HEADERS'] = {
             'Strict-Transport-Security': {'enabled': False}
         }
 
