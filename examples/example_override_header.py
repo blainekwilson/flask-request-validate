@@ -11,13 +11,13 @@ Then visit http://127.0.0.1:5001/ and inspect the response headers.
 import sys
 import os
 
-# Add the src directory to the path to import flask_validate
+# Add the src directory to the path to import flask_request_validate
 _root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 _src = os.path.join(_root, "src")
 if _src not in sys.path:
     sys.path.insert(0, _src)
 
-import flask_validate as fv
+import flask_request_validate as fv
 from flask import Flask
 
 # Override a module-level default before creating the app

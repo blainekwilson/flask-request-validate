@@ -47,7 +47,7 @@ def validate_request_data(rules, request_data):
         # Original validate.py only rejects undeclared keys for form and query_string.
         if section in ("form", "query_string"):
                 for key, value in section_data.items():
-                    # Ignore internal CSRF token field injected by flask-validate when enabled
+                    # Ignore internal CSRF token field injected by flask-request-validate when enabled
                     if key == 'flask_validate_csrf_token':
                         continue
                     if key not in section_rules:

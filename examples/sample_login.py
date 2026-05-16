@@ -12,13 +12,13 @@ from flask import Flask, request, render_template_string
 import sys
 import os
 
-# Add the src directory to the path to import flask_validate
+# Add the src directory to the path to import flask_request_validate
 _root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 _src = os.path.join(_root, "src")
 if _src not in sys.path:
     sys.path.insert(0, _src)
 
-import flask_validate as fv
+import flask_request_validate as fv
 
 app = Flask(__name__)
 # Sessions are required for CSRF token storage. Set a secret key for example/demo use.
@@ -62,8 +62,8 @@ HOME_TEMPLATE = """
 </head>
 <body>
     <h1>User Login</h1>
-    <p>This sample demonstrates a misconfigured form against flask-validate.
-    The password field is missing validation rules causing flask-validate to fail the validation.</p>
+    <p>This sample demonstrates a misconfigured form against flask-request-validate.
+    The password field is missing validation rules causing flask-request-validate to fail the validation.</p>
 
     <form method="POST" action="/login">
         <div class="form-group">

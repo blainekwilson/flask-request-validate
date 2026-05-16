@@ -1,4 +1,4 @@
-# 🚀 flask-validate
+# 🚀 flask-request-validate
 
 **Lightweight, decorator-based input validation for Flask apps**
 
@@ -8,7 +8,7 @@
 
 I'm looking for feedback before publishing to PyPI:
 
-👉 https://github.com/blainekwilson/flask-validate/discussions
+👉 https://github.com/blainekwilson/flask-request-validate/discussions
 
 Would especially appreciate input on API design and validation patterns.
 
@@ -24,7 +24,7 @@ If you are building Flask apps, there are established frameworks you should cons
 
 👉 In practice, a large number of Flask applications still don’t use a structured validation framework and rely on ad hoc validation instead.
 
-👉 flask-validate exists to provide a lightweight, auditable alternative for those cases.
+👉 flask-request-validate exists to provide a lightweight, auditable alternative for those cases.
 
 ---
 
@@ -42,7 +42,7 @@ If you are building Flask apps, there are established frameworks you should cons
 
 ```python
 from flask import Flask, request
-import flask_validate as fv
+import flask_request_validate as fv
 
 app = Flask(__name__)
 

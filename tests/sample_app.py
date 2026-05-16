@@ -19,7 +19,7 @@ if _src not in sys.path:
     sys.path.insert(0, _src)
 
 # pylint: disable=wrong-import-position
-import flask_validate as fv
+import flask_request_validate as fv
 # pylint: disable=wrong-import-position
 
 # Flask constructor takes the name of

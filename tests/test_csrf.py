@@ -7,7 +7,7 @@ if _src not in sys.path:
     sys.path.insert(0, _src)
 
 import re
-import flask_validate as fv
+import flask_request_validate as fv
 from minimal_app import app
 
 

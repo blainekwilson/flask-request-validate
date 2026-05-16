@@ -3,7 +3,7 @@ import os
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-import flask_validate as fv
+import flask_request_validate as fv
 from examples import sample_registration_app as s
 
 
