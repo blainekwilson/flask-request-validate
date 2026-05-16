@@ -95,10 +95,10 @@ warn_no_return = true
 profile = "black"
 line_length = 100
 skip = [".gitignore", ".venv"]
-known_first_party = ["flask_validate"]
+known_first_party = ["flask_request_validate"]
 
 [tool.coverage.run]
-source = ["src/flask_validate"]
+source = ["src/flask_request_validate"]
 omit = ["*/tests/*"]
 
 [tool.coverage.report]

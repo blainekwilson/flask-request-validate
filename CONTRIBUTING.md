@@ -41,7 +41,7 @@ pytest
 
 For test coverage reports:
 ```bash
-pytest --cov=src/flask_validate
+pytest --cov=src/flask_request_validate
 ```
 
 ### Running Individual Tests
@@ -133,7 +133,7 @@ Understanding the project structure can help when making contributions:
 
 ```
 flask-request-validate/
-├── src/flask_validate/      # Main package code
+├── src/flask_request_validate/      # Main package code
 │   ├── __init__.py
 │   ├── validator.py         # Core validation logic
 │   ├── decorators.py        # Flask decorators

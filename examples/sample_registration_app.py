@@ -139,8 +139,8 @@ HOME_TEMPLATE = """
             {% endif %}
         </div>
 
-        {% if errors.get('flask_validate_csrf_token') %}
-            <div class="form-group"><div class="error">{{ errors['flask_validate_csrf_token']|join(', ') }}</div></div>
+            {% if errors.get('flask_request_validate_csrf_token') %}
+                <div class="form-group"><div class="error">{{ errors['flask_request_validate_csrf_token']|join(', ') }}</div></div>
         {% endif %}
         <button type="submit">Register</button>
     </form>

@@ -12,16 +12,16 @@ from minimal_app import app
 
 
 def _extract_csrf_token_from_html(html):
-    m = re.search(r'name="flask_validate_csrf_token"\s+value="([0-9a-f]+)"', html)
+    m = re.search(r'name="flask_request_validate_csrf_token"\s+value="([0-9a-f]+)"', html)
     return m.group(1) if m else None
 
 
 def test_csrf_injection_and_session_storage():
     # enable auto-CSRF and set secret key for sessions; restore after test
-    orig_auto = app.config.get('FLASK_VALIDATE_AUTO_CSRF', False)
+    orig_auto = app.config.get('FLASK_REQUEST_VALIDATE_AUTO_CSRF', False)
     orig_secret = getattr(app, 'secret_key', None)
     try:
-        app.config['FLASK_VALIDATE_AUTO_CSRF'] = True
+        app.config['FLASK_REQUEST_VALIDATE_AUTO_CSRF'] = True
         app.secret_key = 'test-secret'
 
         client = app.test_client()
@@ -42,15 +42,15 @@ def test_csrf_injection_and_session_storage():
                     break
         assert found
     finally:
-        app.config['FLASK_VALIDATE_AUTO_CSRF'] = orig_auto
+        app.config['FLASK_REQUEST_VALIDATE_AUTO_CSRF'] = orig_auto
         app.secret_key = orig_secret
 
 
 def test_csrf_validation_consumes_token_on_post():
-    orig_auto = app.config.get('FLASK_VALIDATE_AUTO_CSRF', False)
+    orig_auto = app.config.get('FLASK_REQUEST_VALIDATE_AUTO_CSRF', False)
     orig_secret = getattr(app, 'secret_key', None)
     try:
-        app.config['FLASK_VALIDATE_AUTO_CSRF'] = True
+        app.config['FLASK_REQUEST_VALIDATE_AUTO_CSRF'] = True
         app.secret_key = 'test-secret'
         client = app.test_client()
 
@@ -61,7 +61,7 @@ def test_csrf_validation_consumes_token_on_post():
         assert token is not None
 
         # POST with token should succeed
-        r2 = client.post('/', data={'name': 'alice', 'flask_validate_csrf_token': token})
+        r2 = client.post('/', data={'name': 'alice', 'flask_request_validate_csrf_token': token})
         if r2.status_code != 200:
             body = r2.get_data(as_text=True)
             with client.session_transaction() as s:
@@ -69,18 +69,18 @@ def test_csrf_validation_consumes_token_on_post():
             raise AssertionError(f"POST failed status={r2.status_code}; body={body!r}; session={sess_items}")
 
         # Reuse of same token should fail (token consumed)
-        r3 = client.post('/', data={'name': 'alice', 'flask_validate_csrf_token': token})
+        r3 = client.post('/', data={'name': 'alice', 'flask_request_validate_csrf_token': token})
         assert r3.status_code == 400
     finally:
-        app.config['FLASK_VALIDATE_AUTO_CSRF'] = orig_auto
+        app.config['FLASK_REQUEST_VALIDATE_AUTO_CSRF'] = orig_auto
         app.secret_key = orig_secret
 
 
 def test_csrf_missing_token_rejected():
-    orig_auto = app.config.get('FLASK_VALIDATE_AUTO_CSRF', False)
+    orig_auto = app.config.get('FLASK_REQUEST_VALIDATE_AUTO_CSRF', False)
     orig_secret = getattr(app, 'secret_key', None)
     try:
-        app.config['FLASK_VALIDATE_AUTO_CSRF'] = True
+        app.config['FLASK_REQUEST_VALIDATE_AUTO_CSRF'] = True
         app.secret_key = 'test-secret'
         client = app.test_client()
 
@@ -88,17 +88,17 @@ def test_csrf_missing_token_rejected():
         r = client.post('/', data={'name': 'alice'})
         assert r.status_code == 400
         body = r.get_data(as_text=True)
-        assert 'Invalid CSRF token' in body or 'flask_validate_csrf_token' in body
+        assert 'Invalid CSRF token' in body or 'flask_request_validate_csrf_token' in body
     finally:
-        app.config['FLASK_VALIDATE_AUTO_CSRF'] = orig_auto
+        app.config['FLASK_REQUEST_VALIDATE_AUTO_CSRF'] = orig_auto
         app.secret_key = orig_secret
 
 
 def test_csrf_mismatched_token_rejected():
-    orig_auto = app.config.get('FLASK_VALIDATE_AUTO_CSRF', False)
+    orig_auto = app.config.get('FLASK_REQUEST_VALIDATE_AUTO_CSRF', False)
     orig_secret = getattr(app, 'secret_key', None)
     try:
-        app.config['FLASK_VALIDATE_AUTO_CSRF'] = True
+        app.config['FLASK_REQUEST_VALIDATE_AUTO_CSRF'] = True
         app.secret_key = 'test-secret'
         client = app.test_client()
 
@@ -109,10 +109,10 @@ def test_csrf_mismatched_token_rejected():
         assert token is not None
 
         bad = token[:-1] + ('0' if token[-1] != '0' else '1')
-        r2 = client.post('/', data={'name': 'alice', 'flask_validate_csrf_token': bad})
+        r2 = client.post('/', data={'name': 'alice', 'flask_request_validate_csrf_token': bad})
         assert r2.status_code == 400
         body = r2.get_data(as_text=True)
-        assert 'Invalid CSRF token' in body or 'flask_validate_csrf_token' in body
+        assert 'Invalid CSRF token' in body or 'flask_request_validate_csrf_token' in body
     finally:
-        app.config['FLASK_VALIDATE_AUTO_CSRF'] = orig_auto
+        app.config['FLASK_REQUEST_VALIDATE_AUTO_CSRF'] = orig_auto
         app.secret_key = orig_secret

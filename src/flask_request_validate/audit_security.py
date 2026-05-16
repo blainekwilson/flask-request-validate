@@ -6,14 +6,14 @@ This script analyzes Flask applications to identify unprotected entry points
 that may accept user input without proper validation.
 
 Usage:
-    python -m flask_validate.audit_security <flask_app_module>
+    python -m flask_request_validate.audit_security <flask_app_module>
     python audit_security.py <flask_app_module>
     python audit_security.py myapp:app
     python audit_security.py --help
 
 Examples:
-    python -m flask_validate.audit_security tests.sample_app:app
-    python -m flask_validate.audit_security myapp:app
+    python -m flask_request_validate.audit_security tests.sample_app:app
+    python -m flask_request_validate.audit_security myapp:app
     python audit_security.py tests/minimal_app.py:app
 """
 
@@ -38,7 +38,7 @@ def import_flask_app(app_path: str):
         module_name = app_path
         app_name = 'app'
 
-    # Get the script's directory (inside flask_validate package)
+    # Get the script's directory (inside flask_request_validate package)
     script_dir = os.path.dirname(os.path.abspath(__file__))
     # Get the project root (parent of src)
     project_root = os.path.dirname(os.path.dirname(script_dir))

@@ -151,7 +151,7 @@ Use flask-validate when:
 pip install -e .
 ```
 
-Planned: PyPI release as flask-validate
+Planned: PyPI release as flask-request-validate
 
 ---
 
@@ -171,7 +171,7 @@ How it works
 How to customize
 
 - **Global defaults** (process-wide): mutate `fv.SECURITY_HEADER_DEFAULTS` before creating your `Flask` app.
-- **Per-app override**: set `app.config['FLASK_VALIDATE_SECURITY_HEADERS']` to a dict of header overrides before running the app.
+- **Per-app override**: set `app.config['FLASK_REQUEST_VALIDATE_SECURITY_HEADERS']` to a dict of header overrides before running the app.
 - **Per-route override**: pass `security_headers` to the `@fv.validate(..., security_headers=...)` decorator for route-level control.
 
 Server header stripping
@@ -181,7 +181,7 @@ Server header stripping
 
 Auto-initialization and `init_app`
 
-- By default `flask_validate.init_app(app)` is called automatically for every `Flask` app created after the module is imported (we monkeypatch `Flask.__init__` to call `init_app`). You can still call `fv.init_app(app)` explicitly — it is idempotent.
+- By default `flask_request_validate.init_app(app)` is called automatically for every `Flask` app created after the module is imported (we monkeypatch `Flask.__init__` to call `init_app`). You can still call `fv.init_app(app)` explicitly — it is idempotent.
 - `init_app` wraps `app.wsgi_app` with the Server-header-stripping middleware and registers the `after_request` hook that applies headers and (optionally) injects CSRF tokens.
 
 Exports
@@ -199,7 +199,7 @@ Tests and examples
 - **Default**: Automatic CSRF injection/validation is enabled by default via `fv.AUTO_CSRF_DEFAULT = True`.
 
     - Disable globally before creating apps: set `fv.AUTO_CSRF_DEFAULT = False`.
-    - Disable per-app: `app.config['FLASK_VALIDATE_AUTO_CSRF'] = False`.
+    - Disable per-app: `app.config['FLASK_REQUEST_VALIDATE_AUTO_CSRF'] = False`.
 
 - **Sessions required**: You must set `app.secret_key` (or configure a session backend) for server-side token storage. The library only injects/enforces CSRF when a session secret is available.
 
@@ -209,7 +209,7 @@ app.secret_key = 'a-secure-secret'
 
 What it does when enabled
 
-- Injects a hidden input named `flask_validate_csrf_token` into any HTML response that contains `</form>`.
+- Injects a hidden input named `flask_request_validate_csrf_token` into any HTML response that contains `</form>`.
 - Stores a server-side token in the user's session using a randomized session key (prefixed with `fv_csrf_`). Tokens are single-use and consumed on successful validation.
 - For inbound form submissions (`application/x-www-form-urlencoded` or `multipart/form-data`) on routes decorated with `@fv.validate(...)`, the decorator will validate the submitted token against session-stored tokens.
 

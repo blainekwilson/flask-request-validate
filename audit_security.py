@@ -10,7 +10,7 @@ Usage:
     python audit_security.py myapp:app
     python audit_security.py --help
 
-This wrapper automatically finds and runs the audit script from the flask_validate package.
+This wrapper automatically finds and runs the audit script from the flask_request_validate package.
 """
 
 import sys
@@ -18,7 +18,7 @@ import os
 
 # Find the audit script in the package
 script_dir = os.path.dirname(os.path.abspath(__file__))
-audit_script = os.path.join(script_dir, 'src', 'flask_validate', 'audit_security.py')
+audit_script = os.path.join(script_dir, 'src', 'flask_request_validate', 'audit_security.py')
 
 # Import and run the main function
 if __name__ == '__main__':
