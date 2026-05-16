@@ -34,3 +34,6 @@ from .rules import (
 
 # Optional: expose patterns for advanced users
 from . import patterns
+
+# Version
+__version__ = "0.1.0"
