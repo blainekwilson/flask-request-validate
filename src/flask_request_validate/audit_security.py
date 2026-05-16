@@ -7,14 +7,14 @@ that may accept user input without proper validation.
 
 Usage:
     python -m flask_request_validate.audit_security <flask_app_module>
-    python audit_security.py <flask_app_module>
-    python audit_security.py myapp:app
-    python audit_security.py --help
+    python -m flask_request_validate.audit_security <flask_app_module>
+    python -m flask_request_validate.audit_security myapp:app
+    python -m flask_request_validate.audit_security --help
 
 Examples:
     python -m flask_request_validate.audit_security tests.sample_app:app
     python -m flask_request_validate.audit_security myapp:app
-    python audit_security.py tests/minimal_app.py:app
+    python -m flask_request_validate.audit_security tests/minimal_app.py:app
 """
 
 import sys

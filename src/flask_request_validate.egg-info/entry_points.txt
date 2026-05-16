@@ -1,0 +1,2 @@
+[console_scripts]
+flask-request-validate-audit = flask_request_validate.audit_security:main
