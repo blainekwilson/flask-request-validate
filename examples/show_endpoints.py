@@ -29,7 +29,7 @@ _src = os.path.join(_root, "src")
 if _src not in sys.path:
     sys.path.insert(0, _src)
 
-import flask_validate as fv
+import flask_request_validate as fv
 
 app = Flask(__name__)
 # Sessions are required for CSRF token storage. Set a secret key for example/demo use.
@@ -123,7 +123,7 @@ def about_page():
 def api_info():
     """Excluded endpoint: API info endpoint that returns data without validation."""
     return jsonify({
-        'application': 'flask-validate example',
+        'application': 'flask-request-validate example',
         'version': '1.0.0',
         'description': 'Demonstrates protected, excluded, and unprotected endpoints'
     })
@@ -197,7 +197,7 @@ DASHBOARD_TEMPLATE = """
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Flask-Validate Endpoint Status Report</title>
+    <title>Flask-Request-Validate Endpoint Status Report</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
@@ -341,7 +341,7 @@ DASHBOARD_TEMPLATE = """
 </head>
 <body>
     <div class="container">
-        <h1>🛡️ Flask-Validate Endpoint Status Report</h1>
+        <h1>🛡️ Flask-Request-Validate Endpoint Status Report</h1>
         <p class="subtitle">Dashboard showing protected, excluded, and unprotected endpoints</p>
         
         <!-- Summary Cards -->
@@ -759,9 +759,9 @@ ABOUT_TEMPLATE = """
             <strong>This page is an EXCLUDED endpoint</strong> - It's safe to exclude because it doesn't process user input.
         </div>
         
-        <h2>What is Flask-Validate?</h2>
+        <h2>What is Flask-Request-Validate?</h2>
         <p>
-            Flask-Validate is a Python library that provides easy-to-use decorators for validating 
+            Flask-Request-Validate is a Python library that provides easy-to-use decorators for validating 
             incoming HTTP requests in Flask applications. It helps protect your application from 
             invalid or malicious input.
         </p>
@@ -790,7 +790,7 @@ ABOUT_TEMPLATE = """
 if __name__ == '__main__':
     print("""
     ╔════════════════════════════════════════════════════════════════╗
-    ║        Flask-Validate Endpoint Status Example                  ║
+    ║        Flask-Request-Validate Endpoint Status Example         ║
     ║                                                                ║
     ║  This application demonstrates:                              ║
     ║  • Protected endpoints (with validation)                     ║

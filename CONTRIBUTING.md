@@ -1,6 +1,6 @@
-# Contributing to flask-validate
+# Contributing to flask-request-validate
 
-Thank you for your interest in contributing to flask-validate! We welcome contributions from the community, whether it's bug reports, feature requests, documentation improvements, or code contributions.
+Thank you for your interest in contributing to flask-request-validate! We welcome contributions from the community, whether it's bug reports, feature requests, documentation improvements, or code contributions.
 
 ## Getting Started
 
@@ -9,7 +9,7 @@ Thank you for your interest in contributing to flask-validate! We welcome contri
 1. **Clone the repository:**
    ```bash
    git clone <repository-url>
-   cd flask-validate
+   cd flask-request-validate
    ```
 
 2. **Create a virtual environment:**
@@ -115,7 +115,7 @@ When reporting bugs, please include:
 - **Steps to Reproduce:** Detailed steps to reproduce the problem
 - **Expected Behavior:** What should happen
 - **Actual Behavior:** What actually happens
-- **Environment:** Python version, flask-validate version, Flask version
+- **Environment:** Python version, flask-request-validate version, Flask version
 - **Code Sample:** Minimal code example that demonstrates the issue
 
 ## Documentation
@@ -132,7 +132,7 @@ When adding new features or changing behavior:
 Understanding the project structure can help when making contributions:
 
 ```
-flask-validate/
+flask-request-validate/
 ├── src/flask_validate/      # Main package code
 │   ├── __init__.py
 │   ├── validator.py         # Core validation logic
@@ -156,6 +156,6 @@ If you have questions about contributing, feel free to:
 
 ## License
 
-By contributing to flask-validate, you agree that your contributions will be licensed under the same license as the project (see LICENSE file).
+By contributing to flask-request-validate, you agree that your contributions will be licensed under the same license as the project (see LICENSE file).
 
-Thank you for contributing to flask-validate!
+Thank you for contributing to flask-request-validate!

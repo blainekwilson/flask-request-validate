@@ -829,7 +829,7 @@ class AppTestCase(unittest.TestCase):
 
     def test_unprotected_route_detection(self):
         """Test detection of unprotected routes."""
-        import flask_validate as fv
+        import flask_request_validate as fv
 
         # First make some requests to populate the registry
         self.client.post("/post_email", data={"email": "test@example.com"})

@@ -4,7 +4,7 @@ Basic decorator usage:
 
 ```python
 from flask import Flask, request
-import flask_validate as fv
+import flask_request_validate as fv
 
 app = Flask(__name__)
 
