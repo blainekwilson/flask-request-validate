@@ -36,4 +36,4 @@ from .rules import (
 from . import patterns
 
 # Version
-__version__ = "0.1.0"
+__version__ = "0.1.1"
