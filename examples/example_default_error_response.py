@@ -6,7 +6,7 @@ Run this and submit invalid data to see the library's default formatted
 HTML error page (400 response).
 """
 
-from flask import Flask, request, render_template_string
+from flask import Flask, request, render_template
 import sys
 import os
 
@@ -20,29 +20,9 @@ import flask_request_validate as fv
 
 app = Flask(__name__)
 
-FORM = """
-<!doctype html>
-<html>
-  <head><title>Default Validator HTML Example</title></head>
-  <body>
-    <h1>Default Error Response Demo</h1>
-    <form method="POST" action="/submit">
-      <label for="name">Name (2-50 chars):</label>
-      <input id="name" name="name" type="text" required>
-      <br/>
-      <label for="age">Age (integer 18-120):</label>
-      <input id="age" name="age" type="number" required>
-      <br/>
-      <button type="submit">Submit</button>
-    </form>
-  </body>
-</html>
-"""
-
-
 @app.route('/')
 def home():
-    return render_template_string(FORM)
+    return render_template('default_error_form.html')
 
 
 @app.route('/submit', methods=['POST'])
