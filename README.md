@@ -145,6 +145,30 @@ Use flask-validate when:
 
 ---
 
+## Design Philosophy
+
+Flask Request Validate is designed for small Flask applications where developers need basic request validation and security controls without adopting a comprehensive validation framework.
+
+For larger applications or those requiring more sophisticated validation, established frameworks such as Flask-WTF are recommended.
+
+### Secure by Default
+
+A central design principle of Flask Request Validate is that security controls should require as little developer intervention as possible.
+
+The library intentionally modifies Flask initialization so that its security functionality is automatically registered when the package is imported. This eliminates the need for developers to remember an additional initialization step.
+
+This was a deliberate architectural decision based on the intended audience. Developers choosing a lightweight validation library over an established framework may also be less likely to configure security controls correctly. Requiring explicit initialization would introduce another opportunity for those controls to be omitted.
+
+### Architectural Tradeoffs
+
+Automatic initialization requires modifying Flask's initialization behavior, which introduces potential compatibility considerations with Flask versions and other extensions.
+
+This tradeoff was accepted intentionally to reduce configuration errors and make security functionality available by default.
+
+The goal is not to replace comprehensive validation frameworks, but to provide a practical security improvement for applications that might otherwise lack adequate request validation.
+
+---
+
 ## 📦 Installation (development)
 
 ```bash
